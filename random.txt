@@ -1,0 +1,28 @@
+questionsContainer.addEventListener("click", (event) => {
+  if (event.target.classList.contains("submit-answer")) {
+    const question = event.target.closest(".question");
+    const answerInput = question.querySelector(".answer-input");
+    const answer = answerInput.value;
+    if (!answer) {
+      return;
+    }
+    const answerParagraph = question.querySelector(".question-answer");
+    answerParagraph.textContent = answer;
+  } else if (event.target.classList.contains("bookmark-button")) {
+    const question = event.target.closest(".question");
+    const questionText = question.querySelector(".question-text").textContent;
+    const questionAnswer = question.querySelector(".question-answer");
+
+    if (question.classList.contains("bookmarked")) {
+      question.classList.remove("bookmarked");
+      const index = bookmarkedQuestions.findIndex(q => q.questionText === questionText);
+      bookmarkedQuestions.splice(index, 1);
+    } else {
+      question.classList.add("bookmarked");
+      bookmarkedQuestions.push({ questionText, answer: questionAnswer.textContent });
+    }
+    renderBookmarks();
+  
+  }
+});
+
